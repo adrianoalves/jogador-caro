@@ -1,1 +1,7 @@
 /backend/.env
+/frontend/src/stores/example-store.js
+/frontend/.vscode/extensions.json
+/.idea/jogador-caro.iml
+/.idea/modules.xml
+/.idea/php.xml
+/frontend/.vscode/settings.json
