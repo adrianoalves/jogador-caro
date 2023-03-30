@@ -69,13 +69,12 @@
   import { onMounted, ref } from "vue"
   import { useRoute } from "vue-router"
   import {QSpinnerHourglass, useQuasar} from "quasar"
-  import {getMatch} from "src/composables/useMatch"
+  import {getMatch, match} from "src/composables/useMatch"
   import {formatDate} from "src/composables/useTimeFormatters"
-  import { matchTableLoading, columns, rows, pagination, matchPlayerTable, getMatchPlayersTableRows, toggleConfirmation, onRequest } from "src/composables/useMatchPlayerTable"
+  import { matchTableLoading, columns, rows, pagination, getMatchPlayersTableRows, toggleConfirmation, onRequest } from "src/composables/useMatchPlayerTable"
 
   const route = useRoute()
   const $q = useQuasar()
-  const match = ref(null)
   const matchId = ref(route.params.match_id)
 
   function confirmed(row) {
@@ -96,6 +95,7 @@
       })
       .finally( () => $q.loading.hide() )
   }
+
   onMounted( () => {
     $q.loading.show({ message: 'Buscando Informações...', spinner: QSpinnerHourglass})
     Promise.all([
@@ -104,6 +104,9 @@
           match.value = res.data.data
         })
     ])
+    .catch( error => {
+      $q.notify({ message: error.message, type: 'negative', delay: 5000})
+    })
     .finally( () => $q.loading.hide() )
   })
 </script>

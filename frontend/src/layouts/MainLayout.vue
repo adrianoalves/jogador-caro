@@ -7,7 +7,7 @@
           round
           icon="local_police"
           aria-label="Icon"
-          :to="{path: '/match'}"
+          :to="{path: '/'}"
         />
 
         <q-toolbar-title>

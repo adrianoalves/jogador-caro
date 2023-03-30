@@ -54,7 +54,7 @@ function submit() {
 
   let data = {
     match_id: route.params.match_id,
-    players_per_squad
+    players_per_squad: players_per_squad.value
   }
 
   $q.loading.show({ message: 'Montando Times...', spinner: QSpinnerHourglass })

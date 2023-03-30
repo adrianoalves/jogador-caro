@@ -1,4 +1,7 @@
 import {api} from "boot/axios"
+import {ref} from 'vue'
+
+const match = ref(null)
 
 const getMatches = async function(page, perPage) {
   return api.get(`match?page=${page}&per_page=${perPage}`)
@@ -12,4 +15,4 @@ const createMatch = async function(data) {
   return api.post('match', data)
 }
 
-export { getMatches, getMatch, createMatch }
+export { match, getMatches, getMatch, createMatch }
