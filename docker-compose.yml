@@ -1,0 +1,81 @@
+services:
+    app:
+        build:
+            context: .docker/app
+        container_name: jc_app
+        environment:
+            SERVICE_NAME: jc_app
+            SERVICE_TAGS: php
+        working_dir: /var/www/
+        volumes:
+            - ./backend:/var/www
+            - .docker/app/config/php.ini:/usr/local/etc/php/conf.d/laravel.ini
+            - .docker/app/config/cron/jc:/etc/cron.d/jc
+        networks:
+            - ntw_jc
+        command: php-fpm
+    # frontend application
+    front:
+        build:
+            context: .docker/frontend
+        container_name: jc_frontend
+        environment:
+            SERVICE_NAME: front
+            SERVICE_TAGS: quasar
+        working_dir: /var/www
+        volumes:
+            - ./frontend:/var/www
+        ports:
+            - "8080:8080"
+            - "9090:9090"
+        stdin_open: true
+        tty: true
+        networks:
+            - ntw_jc
+        # webserver
+    webserver:
+        image: nginx:alpine
+        container_name: jc_webserver
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./backend:/var/www
+            - ./.docker/webserver/config/:/etc/nginx/conf.d/
+        networks:
+            - ntw_jc
+
+    mariadb:
+        image: mariadb
+        container_name: jc_mariadb
+        ports:
+            - 3306:3306
+        volumes:
+            - dbdata:/var/lib/mysql/
+            - ./.docker/mysql/config/my.cnf:/etc/mysql/my.cnf
+        environment:
+            - MYSQL_DATABASE=jc
+            - MYSQL_ROOT_PASSWORD=seven
+            - MYSQL_PASSWORD=seven
+            - MYSQL_USER=root
+        networks:
+            - ntw_jc
+
+    redis:
+        image: redis:alpine
+        container_name: jc_redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+        networks:
+            - ntw_jc
+# by configuring a network, it helps to build a cloud prod microservice environment
+networks:
+    ntw_jc:
+        driver: bridge
+volumes:
+    dbdata:
+        driver: local
+    redis_data:
+        driver: local
