@@ -30,7 +30,7 @@ class SquadBuilderRequest extends FormRequest
     {
         return [
             'match_id.required' => 'Informe uma Match',
-            'match_id.int' => 'Indentificação da Match Inválido'
+            'match_id.int' => 'Identificação da Match Inválido'
         ];
     }
 }

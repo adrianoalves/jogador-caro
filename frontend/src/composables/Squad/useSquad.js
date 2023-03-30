@@ -1,11 +1,14 @@
 import {api} from "boot/axios"
+import { ref } from 'vue'
 
-const getSquads = async function(match_id) {
+const squads = ref(null)
+
+const getMatchSquads = async function(match_id) {
   return api.get(`squads/${match_id}`)
 }
 
 const mountSquads = async function(id) {
-  return api.post(`squad-mount`, {id})
+  return api.post(`squad/mount`, id)
 }
 
-export { getSquads, mountSquads }
+export { squads, getMatchSquads, mountSquads }

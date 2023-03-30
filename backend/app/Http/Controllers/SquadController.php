@@ -17,7 +17,6 @@ class SquadController extends Controller
     public function mount(SquadBuilderRequest $request)
     {
         try {
-            dd($request->all());
             $matchId = $request->post('match_id');
             $playersPerSquad = $request->post('players_per_squad', 5);
 

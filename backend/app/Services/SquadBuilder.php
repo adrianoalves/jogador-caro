@@ -6,6 +6,11 @@ use App\Models\MatchPlayer;
 
 class SquadBuilder
 {
+    /**
+     * Get the confirmed players by match id
+     * @param int $matchId
+     * @return mixed
+     */
     public function getConfirmedPlayersByMatch(int $matchId)
     {
         return MatchPlayer::confirmed()->fromMatch($matchId)->get()->keyBy('id')->sortByDesc('user.card.overall');
@@ -19,7 +24,9 @@ class SquadBuilder
     {
         return \App\Models\Squad::where('match_day_id', $matchId )->count('id');
     }
+
     /**
+     * Main method to build teams using the players confirmations
      * @param int $matchId the Match day ID
      * @param int $howManyPlayersPerSquad the number of players by squad
      * @throws \Exception
@@ -35,6 +42,9 @@ class SquadBuilder
 
         $totalPlayers = $players->count();
         $howManySquads = \floor($totalPlayers / $howManyPlayersPerSquad);
+
+        \throw_if($howManySquads < 2, new \Exception("Não foi possível montar 2 times de {$howManyPlayersPerSquad} Jogadores com o número de jogadores confirmados"));
+
         $goalKeepers = $players->where('user.card.primary_position', Position::GOALKEEPER->value);
         $squads = [];
 
