@@ -81,7 +81,7 @@
     $q.loading.show({ message: 'Modificando Confirmação', spinner: QSpinnerHourglass})
     toggleConfirmation(row.id)
       .then( res => {
-        let message = row.confirmed ? 'Jogador confirmado!' : 'Jogador Retirado da Lista de Confirmados'
+        let message = row.confirmed ? `Jogador <b>${row.user.name}</b> confirmado!` : `Jogador <b>${row.user.name}</b> Retirado da Lista de Confirmados`
         let type = row.confirmed ? 'positive' : 'info'
 
         $q.notify({

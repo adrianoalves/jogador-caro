@@ -44,7 +44,7 @@ import { ref } from 'vue'
 import { useQuasar, QSpinnerHourglass } from 'quasar'
 import { useRoute } from "vue-router"
 import { showForm } from "src/composables/Squad/useSquadBuilder"
-import { mountSquads } from "src/composables/Squad/useSquad"
+import { mountSquads, squads } from "src/composables/Squad/useSquad"
 
 const $q = useQuasar()
 const route = useRoute()
@@ -63,6 +63,8 @@ function submit() {
     mountSquads(data)
       .then( res => {
         showForm.value = false
+        squads.value = res.data.data
+
         $q.notify({
           type: 'positive', message: 'Times para a Match Montados', html: true, delay: 7000, position: 'top'
         })
@@ -74,7 +76,7 @@ function submit() {
         })
       })
       .finally( res => $q.loading.hide() )
-  }, 2000)
+  }, 1000)
 
 }
 </script>
