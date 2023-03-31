@@ -89,7 +89,7 @@ module.exports = configure(function ( ctx ) {
     devServer: {
       // https: true
       open: false, // opens browser window automatically
-      port: ctx.mode.spa ? 8080 : 9090,
+      port: 80,
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
