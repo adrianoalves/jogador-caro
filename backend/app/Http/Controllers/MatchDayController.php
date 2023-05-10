@@ -25,7 +25,7 @@ class MatchDayController extends Controller
     public function create( CreateMatchDayRequest $request )
     {
         try {
-            $matchDay = MatchDay::query()->create( $request->validated() );
+            $matchDay = MatchDay::create( $request->validated() );
             return \response()->json( $matchDay->only(['id', 'when', 'where']), 201 );
         }
         catch ( \Exception $e ) {

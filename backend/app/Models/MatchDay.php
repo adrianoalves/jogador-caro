@@ -37,6 +37,9 @@ class MatchDay extends AppModel
         };
     }
 
+    /**
+     * @return HasManyThrough
+     */
     public function users(): HasManyThrough
     {
         return $this->hasManyThrough(

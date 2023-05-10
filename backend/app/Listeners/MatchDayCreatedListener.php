@@ -21,16 +21,18 @@ class MatchDayCreatedListener
     /**
      * Handle the event.
      */
-    public function handle(MatchDayCreated $event): void
+    public function handle( MatchDayCreated $event ): void
     {
         $matchDay = $event->matchDay;
         $users = User::active()->get();
 
-        foreach( $users as $user ) {
-            MatchPlayer::query()->create([
-                'match_day_id' => $matchDay->id,
-                'user_id' => $user->id
-            ]);
+        if( $users ) {
+            foreach( $users as $user ) {
+                MatchPlayer::create([
+                    'match_day_id' => $matchDay->id,
+                    'user_id' => $user->id
+                ]);
+            }
         }
     }
 }

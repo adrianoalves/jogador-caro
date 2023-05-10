@@ -38,10 +38,9 @@ services:
         container_name: jc_webserver
         ports:
             - "8080:8080"
-            - "443:443"
         volumes:
             - ./backend:/var/www
-            - ./.docker/webserver/config/:/etc/nginx/conf.d/
+            - ./.docker/webserver/config/webserver.conf:/etc/nginx/conf.d/webserver.conf
         networks:
             - ntw_jc
 
@@ -76,6 +75,7 @@ networks:
         driver: bridge
 volumes:
     dbdata:
+
         driver: local
     redis_data:
         driver: local
